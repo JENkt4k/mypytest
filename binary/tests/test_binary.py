@@ -1,6 +1,7 @@
 from binary import Binary
 import pytest
 
+@pytest.mark.description("test int conversion of binary")
 def test_binary_init_int():
     binary = Binary(6)
     assert int(binary) == 6

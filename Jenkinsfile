@@ -49,7 +49,7 @@ pipeline {
   }
   post {
     always {            
-      archiveArtifacts 'test-reports/*'
+      archiveArtifacts 'test-reports/*.xml'
       junit 'test-reports/*.xml'
       dir('test-reports'){ 
         deleteDir()

@@ -33,3 +33,4 @@ def test_binary_init_strseq():
 def test_binary_init_negative():
     with pytest.raises(ValueError):
         binary = Binary(-4)
+        assert int(binary) == -4

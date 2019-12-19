@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('clean') {
       steps {
-          sh 'pyc ./'  
+          sh 'pyc.sh ./'  
       }
     }
     stage('build') {
@@ -60,21 +60,13 @@ pipeline {
         }
       }
     }
-    stage('createAPK'){
-      steps{
-        sh './gradlew assembleRelease'  
-      }
-    }
   }
   post {
     always {            
-      junit 'app/build/test-results/**/*.xml'
-      androidLint canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'app/build/reports/**/*', unHealthy: ''
-      archiveArtifacts 'app/build/outputs/apk/**/*.apk'
-      dir('app/build/test-results'){ 
+      archiveArtifacts 'test-reports/*'
+      dir('test-reports'){ 
         deleteDir()
-      }
-      
+      }      
     }
   }
 } 

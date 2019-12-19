@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('clean') {
       steps {
-          sh 'pyc.sh ./'  
+          sh './pyc.sh ./'  
       }
     }
     stage('build') {

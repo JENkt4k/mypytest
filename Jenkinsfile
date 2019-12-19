@@ -44,26 +44,13 @@ pipeline {
             }     
           }
         }
-        stage('doctest'){
-          steps{
-            dir('binary') {
-              script {
-                try {
-                  sh 'python -m doctest -v binary.py'
-                } catch (Exception e) {
-                  echo e.getMessage()
-                  echo "test failed"
-                }
-              }   
-            }    
-          }   
-        }
       }
     }
   }
   post {
     always {            
       archiveArtifacts 'test-reports/*'
+      junit 'test-reports/*.xml'
       dir('test-reports'){ 
         deleteDir()
       }      

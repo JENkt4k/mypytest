@@ -35,7 +35,7 @@ pipeline {
             dir('binary') {
               script {
                 try {
-                  sh sh 'python -m pytest tests/ --junitxml test-reports/report-$BUILD_NUMBER.xml'
+                  sh 'python -m pytest tests/ --junitxml test-reports/report-$BUILD_NUMBER.xml'
                 } catch (Exception e) {
                   echo e.getMessage()
                   echo "Lint failed"

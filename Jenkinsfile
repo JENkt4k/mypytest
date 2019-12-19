@@ -51,7 +51,7 @@ pipeline {
     always {            
       archiveArtifacts 'binary/test-reports/*.xml'
       junit 'binary/test-reports/*.xml'
-      dir('test-reports'){ 
+      dir('binary/test-reports'){ 
         deleteDir()
       }      
     }

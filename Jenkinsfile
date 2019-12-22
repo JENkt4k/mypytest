@@ -15,19 +15,6 @@ pipeline {
           sh 'pip install -r ./requirements.txt'
       }
     }
-    stage('Sonarqube') {
-      environment {
-        scannerHome = tool 'SonarQubeScanner'
-      }
-      steps {
-        withSonarQubeEnv('sonarqube') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-        timeout(time: 30, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
-        }
-      }
-    }
     stage('Unit Test'){
       parallel {
         stage('pytest'){
@@ -46,11 +33,28 @@ pipeline {
         }
       }
     }
+    stage('juint'){
+      steps {
+        junit 'binary/test-reports/*.xml'
+      }
+    }
+    stage('Sonarqube') {
+      environment {
+        scannerHome = tool 'SonarQubeScanner'
+      }
+      steps {
+        withSonarQubeEnv('sonarqube') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+        timeout(time: 30, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
   }
   post {
     always {            
       archiveArtifacts 'binary/test-reports/*.xml'
-      junit 'binary/test-reports/*.xml'
       dir('binary/test-reports'){ 
         deleteDir()
       }      

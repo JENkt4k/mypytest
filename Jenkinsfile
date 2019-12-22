@@ -44,7 +44,7 @@ pipeline {
           script {
             try {
               sh 'coverage erase'
-              sh 'coverage run -m unittest discover -s ../tests'
+              sh 'coverage run -m pytest ../tests/'
               sh 'coverage xml -i'
             } catch (Exception e) {
               echo e.getMessage()
